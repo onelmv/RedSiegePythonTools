@@ -32,6 +32,7 @@ def geolocate(ip_list, key):
 def output(data):
     #TODO improve the output format
     """Print the data 
+       output : ip, country_name, state_prov, city, isp 
         
     Args:
         data (array): data contain the API data in json format
