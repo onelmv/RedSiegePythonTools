@@ -11,8 +11,9 @@ IPg.py <file path> <API key>
 import sys
 import requests
 
-API_URL = "https://api.ipgeolocation.io/ipgeo" 
+# global variable. modifiable depending on the data you want to obtain
 API_DATA = ["ip","country_name","state_prov","city","isp",] 
+API_URL = "https://api.ipgeolocation.io/ipgeo" 
 
 def geolocate(ip_list, key):
     """use the arguments provided by the user to make the request
