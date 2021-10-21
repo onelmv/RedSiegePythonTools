@@ -17,7 +17,7 @@ API : https://ipgeolocation.io/documentation/ip-geolocation-api.html
 
 ================================
 
-ip:
+ip:\n
 country_name:
 state_prov:
 city:
