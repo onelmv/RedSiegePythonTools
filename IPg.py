@@ -37,7 +37,14 @@ def output(data):
     Args:
         data (array): data contain the API data in json format
     """
+    
     print("================================")
+    
+    # message in case the ip address are not correct. 
+    if len(data) == 1:
+        print("[!] IP NOT FOUND")
+        print("[!] check IP addresses list")
+    
     i = 0
     for elem in data:
         if elem == API_DATA[i]:
