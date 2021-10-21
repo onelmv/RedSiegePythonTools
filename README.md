@@ -1,6 +1,13 @@
-# IPg
+- [1. IPg](#1-ipg)
+  - [1.1. Project 1 - The Scope!](#11-project-1---the-scope)
+  - [1.2. Output](#12-output)
+  - [1.3. json response](#13-json-response)
+  - [1.4. File Format](#14-file-format)
 
-## Project 1 - The Scope!
+
+# 1. IPg
+
+## 1.1. Project 1 - The Scope!
 
 Intermediate Task:  Have the script read multiple IP addresses from a text file and process them all at once.
 
@@ -10,16 +17,16 @@ __IPg receives two values as arguments: the file and the API key__
 `Ipg.py <file> <API_key>`
 
 
-API : https://ipgeolocation.io/documentation/ip-geolocation-api.html
+API: https://ipgeolocation.io/documentation/ip-geolocation-api.html
 
 
-## Output
+## 1.2. Output
 
 ================================
 
 ip | country_name | state_prov | city | isp
 
-## json response
+## 1.3. json response
 
 ```json
 {
@@ -61,3 +68,9 @@ ip | country_name | state_prov | city | isp
         "dst_savings": 1
     }
 }
+
+## 1.4. File Format
+
+The file must contain an IP address per line.
+
+
