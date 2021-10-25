@@ -17,12 +17,8 @@ API_DATA = ["ip","country_name","state_prov","city","isp",]
 API_URL = "https://api.ipgeolocation.io/ipgeo" 
 
 def geolocate_file(ip_list, key):
-    """use the arguments provided by the user to make the request
-
-    Args:
-        ip_list (array): array of IP addresses obtained from a text file
-        key (string): API key
-    """
+     #request information from a list of IP addresses obtained from a text file
+        
     for ip in ip_list:
         r = requests.get(f"{API_URL}?apiKey={key}&ip={ip}")
         data = r.json()
