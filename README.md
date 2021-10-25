@@ -12,9 +12,9 @@
 Intermediate Task:  Have the script read multiple IP addresses from a text file and process them all at once.
 
 
-__IPg receives two values as arguments: the file and the API key__
+__IPg receives two values as arguments: a file with a list of IP addresses or just an IP address, and the API key__
 
-`Ipg.py <file> <API_key>`
+`Ipg.py <file> or <ip> <API_key>`
 
 
 API: https://ipgeolocation.io/documentation/ip-geolocation-api.html
@@ -72,5 +72,6 @@ ip | country_name | state_prov | city | isp
 ## 1.4. File Format
 
 The file must contain an IP address per line.
+The list can contain networks in CIDR notation.
 
 

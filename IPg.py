@@ -12,26 +12,43 @@ import sys
 import requests
 import os
 
+
 # global variable. modifiable depending on the data you want to obtain
 API_DATA = ["ip","country_name","state_prov","city","isp",] 
 API_URL = "https://api.ipgeolocation.io/ipgeo" 
+
+def geolocate_cidr(ip, key):
+    #storing the ip without the CIDR 
+    ip = ip.split('/')
+        
+    data = requests.get(f"{API_URL}?apiKey={key}&ip={ip[0]}").json()
+    output(data)
+
 
 def geolocate_file(ip_list, key):
      #request information from a list of IP addresses obtained from a text file
         
     for ip in ip_list:
-        r = requests.get(f"{API_URL}?apiKey={key}&ip={ip}")
-        data = r.json()
+        if '/' in ip:
+            # if the IP addres is in CIDR format
+            geolocate_cidr(ip, key)
+        else:
+            r = requests.get(f"{API_URL}?apiKey={key}&ip={ip}")
+            data = r.json()
 
-        #output function
-        output(data)
+            #output function
+            output(data)
 
 def geolocate_ip(ip, key):
-    #request information of a specific IP provided by the user.
     
-    data = requests.get(f"{API_URL}?apiKey={key}&ip={ip}").json()
-       
-    output(data)
+    if '/' in ip:
+            # if the IP addres is in CIDR format
+            geolocate_cidr(ip, key)
+    else:
+        #request information of a specific IP provided by the user.
+        data = requests.get(f"{API_URL}?apiKey={key}&ip={ip}").json()
+        
+        output(data)
 
 def output(data):
     """Print the data 
