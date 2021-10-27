@@ -15,53 +15,62 @@ import ipaddress
 
 
 # global variable. modifiable depending on the data you want to obtain
-API_DATA = ["ip","country_name","state_prov","city","isp",]
+API_DATA = [
+    "ip",
+    "country_name",
+    "state_prov",
+    "city",
+    "isp",
+]
 API_URL = "https://api.ipgeolocation.io/ipgeo"
 
+
 def geolocate_cidr(ip, key):
-    #storing the ip without the CIDR
-    if '\n' in ip:
-        ip = ip.split('\n') # discaring '\n' at the end of the ip address
-        ip = ipaddress.IPv4Network(ip[0]) # taking just the first part of the split
+    # storing the ip without the CIDR
+    if "\n" in ip:
+        ip = ip.split("\n")  # discaring '\n' at the end of the ip address
+        ip = ipaddress.IPv4Network(ip[0])  # taking just the first part of the split
     else:
-        ip = ipaddress.IPv4Network(ip) 
+        ip = ipaddress.IPv4Network(ip)
 
     ip_address = ip.network_address
     while ip_address <= ip.broadcast_address:
         data = requests.get(f"{API_URL}?apiKey={key}&ip={ip_address}").json()
         output(data)
         print(ip_address)
-        ip_address += 1 #next ip on the network
+        ip_address += 1  # next ip on the network
 
 
 def geolocate_file(ip_list, key):
-     #request information from a list of IP addresses obtained from a text file
+    # request information from a list of IP addresses obtained from a text file
 
     for ip in ip_list:
-        if '/' in ip:
+        if "/" in ip:
             # if the IP addres is in CIDR format
             geolocate_cidr(ip, key)
         else:
             r = requests.get(f"{API_URL}?apiKey={key}&ip={ip}")
             data = r.json()
 
-            #output function
+            # output function
             output(data)
+
 
 def geolocate_ip(ip, key):
 
-    if '/' in ip:
+    if "/" in ip:
         # if the IP addres is in CIDR format
         geolocate_cidr(ip, key)
     else:
-        #request information of a specific IP provided by the user.
+        # request information of a specific IP provided by the user.
         data = requests.get(f"{API_URL}?apiKey={key}&ip={ip}").json()
 
         output(data)
 
+
 def output(data):
     """Print the data
-       output : ip, country_name, state_prov, city, isp
+    output : ip, country_name, state_prov, city, isp
     """
     print("================================")
 
@@ -76,7 +85,9 @@ def output(data):
         if elem == API_DATA[i]:
             print(f"{elem}:{data[elem]}")
             i += 1
-            if i == 5 : break # this break here it to avoid an overflow
+            if i == 5:
+                break  # this break here it to avoid an overflow
+
 
 def main(argv):
     # check if it's a file with the IP addresses or a typed ip
@@ -84,13 +95,14 @@ def main(argv):
         # this array will contain all the ip addresses
         ip_list = []
 
-        with open(argv[1], 'r') as iFile:
+        with open(argv[1], "r") as iFile:
             for ip in iFile:
                 ip_list.append(ip)
         geolocate_file(ip_list, argv[2])
 
     else:
         geolocate_ip(argv[1], argv[2])
+
 
 if __name__ == "__main__":
     # making sure the 2 arguments is present.
