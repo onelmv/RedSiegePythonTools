@@ -11,7 +11,7 @@ IPg.py <file path> <API key>
 import os
 import sys
 import requests
-
+import ipaddress
 
 
 # global variable. modifiable depending on the data you want to obtain
@@ -20,10 +20,18 @@ API_URL = "https://api.ipgeolocation.io/ipgeo"
 
 def geolocate_cidr(ip, key):
     #storing the ip without the CIDR
-    ip = ip.split('/')
+    if '\n' in ip:
+        ip = ip.split('\n') # discaring '\n' at the end of the ip address
+        ip = ipaddress.IPv4Network(ip[0]) # taking just the first part of the split
+    else:
+        ip = ipaddress.IPv4Network(ip) 
 
-    data = requests.get(f"{API_URL}?apiKey={key}&ip={ip[0]}").json()
-    output(data)
+    ip_address = ip.network_address
+    while ip_address <= ip.broadcast_address:
+        data = requests.get(f"{API_URL}?apiKey={key}&ip={ip_address}").json()
+        output(data)
+        print(ip_address)
+        ip_address += 1 #next ip on the network
 
 
 def geolocate_file(ip_list, key):
